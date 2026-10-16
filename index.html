@@ -3,13 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="theme-color" content="#7778df">
+    <title>Focus Board</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js" defer></script>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <form action="nama" method="GET">
-        <input type="text" name="nama" placeholder="Enter your name">
-        <button type="submit">Submit</button>
-    </form>
+    <main class="dashboard">
+        <header class="welcome card">
+            <p class="clock" id="clock" aria-label="Current time">--:--:--</p>
+            <p class="date" id="date"></p>
+            <div class="greeting-row">
+                <h1 id="greeting">Good morning</h1>
+                <button class="icon-button name-button" id="edit-name" type="button" aria-label="Change your name" title="Change your name">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15.2 5.2 3.6 3.6M4 20l4.1-.8L19.5 7.8a2.55 2.55 0 0 0-3.6-3.6L4.9 15.2 4 20Z"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <section class="card timer-card" aria-labelledby="timer-title">
+            <div class="section-heading">
+                <span class="heading-icon timer-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 1.5M9 2h6M12 2v3"/></svg>
+                </span>
+                <h2 id="timer-title">Focus Timer</h2>
+            </div>
+            <p class="timer-mode" id="timer-mode">Time to focus</p>
+            <p class="timer-display" id="timer-display" role="timer" aria-label="25 minutes remaining">25:00</p>
+            <form class="duration-form" id="duration-form">
+                <label for="duration">Focus length</label>
+                <div class="duration-control">
+                    <input id="duration" name="duration" type="number" min="1" max="180" value="25" inputmode="numeric">
+                    <span>min</span>
+                    <button class="text-button" type="submit">Set</button>
+                </div>
+            </form>
+            <div class="timer-actions">
+                <button class="button button-primary" id="start-timer" type="button">Start</button>
+                <button class="button button-secondary" id="stop-timer" type="button" disabled>Stop</button>
+                <button class="button button-secondary" id="reset-timer" type="button">Reset</button>
+            </div>
+        </section>
+
+        <section class="card tasks-card" aria-labelledby="tasks-title">
+            <div class="section-heading">
+                <span class="heading-icon tasks-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m8 12 2.5 2.5L16.5 8.5"/><rect x="3.5" y="3.5" width="17" height="17" rx="4"/></svg>
+                </span>
+                <h2 id="tasks-title">Tasks</h2>
+                <span class="item-count" id="task-count">0 tasks</span>
+            </div>
+            <form class="add-form" id="task-form">
+                <label class="visually-hidden" for="task-input">Add a new task</label>
+                <input id="task-input" name="task" type="text" maxlength="120" placeholder="Add a new task..." autocomplete="off" required>
+                <button class="button button-primary" type="submit">Add task</button>
+            </form>
+            <p class="form-message" id="task-message" aria-live="polite"></p>
+            <ul class="task-list" id="task-list" aria-label="Your tasks"></ul>
+            <p class="empty-state" id="task-empty">A clear mind starts with one small step.</p>
+        </section>
+
+        <section class="card links-card" aria-labelledby="links-title">
+            <div class="section-heading">
+                <span class="heading-icon links-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M10 13.5a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.7 1.7"/><path d="M14 10.5a4 4 0 0 0-5.7 0l-3 3A4 4 0 0 0 11 19.2l1.7-1.7"/></svg>
+                </span>
+                <h2 id="links-title">Quick Links</h2>
+            </div>
+            <form class="link-form" id="link-form">
+                <label class="visually-hidden" for="link-name">Link name</label>
+                <input id="link-name" name="name" type="text" maxlength="30" placeholder="Link name" autocomplete="off" required>
+                <label class="visually-hidden" for="link-url">Website address</label>
+                <input id="link-url" name="url" type="url" placeholder="https://website.com" autocomplete="url" required>
+                <button class="button button-primary" type="submit">Add link</button>
+            </form>
+            <p class="form-message" id="link-message" aria-live="polite"></p>
+            <ul class="link-list" id="link-list" aria-label="Your quick links"></ul>
+            <p class="empty-state" id="link-empty">Add your favorite sites for quick access.</p>
+        </section>
+
+        <footer class="footer">
+            <span>Small steps, focused days.</span>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+                <span class="theme-icon" aria-hidden="true">☾</span>
+                <span id="theme-label">Dark mode</span>
+            </button>
+        </footer>
+        <p class="visually-hidden" id="app-message" role="status" aria-live="polite"></p>
+    </main>
+
+    <dialog class="name-dialog" id="name-dialog" aria-labelledby="name-dialog-title">
+        <form id="name-form" method="dialog">
+            <h2 id="name-dialog-title">What should we call you?</h2>
+            <label for="name-input">Your name</label>
+            <input id="name-input" name="name" type="text" maxlength="40" placeholder="Enter your name" autocomplete="given-name">
+            <div class="dialog-actions">
+                <button class="button button-secondary" id="cancel-name" type="button">Cancel</button>
+                <button class="button button-primary" type="submit">Save name</button>
+            </div>
+        </form>
+    </dialog>
 </body>
 </html>
